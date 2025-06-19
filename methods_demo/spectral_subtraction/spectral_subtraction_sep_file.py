@@ -8,7 +8,7 @@ def spectral_subtraction_basic(
     sr,               # Sampling rate
     n_fft=2048,       # FFT window size
     hop_length=512,   # Hop length for STFT
-    subtraction_factor=1.0, # How much of the noise profile to subtract
+    subtraction_factor=10.0, # How much of the noise profile to subtract
     floor_factor=0.01, # For spectral flooring to reduce musical noise
     verbose=False      # If True, prints some shapes and info
 ):
