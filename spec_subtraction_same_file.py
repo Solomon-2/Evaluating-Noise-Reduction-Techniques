@@ -89,14 +89,11 @@ def spectral_subtraction_auto_noise( # Renamed for clarity
         print("Spectral Subtraction (Auto Noise Estimation) Complete.")
         print(f"  Shape of y_cleaned: {y_cleaned.shape}")
 
-    sf.write("mono_cleaned_audio.wav", y_cleaned, 16000)
+    sf.write("sleep_demo/mono_cleaned_audio.wav", y_cleaned, 16000)
 
 
   
 
-y_combined, sr_voice = librosa.load('combined_audio.wav', sr=16000)
-y_noise, sr_noise = librosa.load('noise.wav', sr=16000)
+y_combined, sr_voice = librosa.load('sleep_demo/sleep_test_1.wav', sr=16000)
 
-# Change the length of noise (since it's longer) to match voice
-y_noise_truncated = y_noise[:len(y_combined)]
 spectral_subtraction_auto_noise(y_combined,16000)
