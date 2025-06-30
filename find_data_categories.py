@@ -30,11 +30,9 @@ meta = pd.read_csv("ESC-50-MASTER/meta/esc50.csv")
 def return_file_path(category):
     # Returns a list of file paths for the given category
     filtered = meta[meta['category'].isin(category)].copy()
-    if filtered:
-        audio_dir = 'ESC-50-master/audio/'
-        file_paths = [os.path.join(audio_dir, fname) for fname in filtered['filename']]
-        return file_paths
-    else:
-        print(f"No files found for category: {category}")
-        return []
+    
+    audio_dir = 'ESC-50-master/audio/'
+    file_paths = [os.path.join(audio_dir, fname) for fname in filtered['filename']]
+    return file_paths
+ 
 

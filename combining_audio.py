@@ -3,6 +3,8 @@ import numpy as np
 import soundfile as sf
 import argparse
 
+from find_data_categories import return_file_path
+
 
 def combine_audio(clean_sound, noise, output_name):
   y_voice, sr_voice = librosa.load(clean_sound, sr=16000)
@@ -38,22 +40,35 @@ def combine_audio(clean_sound, noise, output_name):
 
   
 def main():
-  parser = argparse.ArgumentParser(
-    description = "Combine audio files"
-  )
+    parser = argparse.ArgumentParser(
+        description = "Combine audio files"
+    )
 
-  parser.add_argument("-cl", "--clean", help="Clean Audio")
-  parser.add_argument("-n", "--noise", help="Noise")
-  parser.add_argument("-out", "--output_name", help="Output file name")
+    parser.add_argument("-cl", "--clean", help="Clean Audio")
+    parser.add_argument("-n", "--noise", help="Noise")
+    parser.add_argument("-out", "--output_name", help="Output file name")
+    parser.add_argument("-cat", "--noise_category", help="Noise category (optional)")
+    # Optionally, you can add a flag to specify the category of noise, e.g. thunderstorm, rain
 
-  args = parser.parse_args()
+    args = parser.parse_args()
 
-  try:
-    if args.clean and args.noise and args.output_name:
-      combine_audio(args.clean, args.noise, args.output_name)
-
-  except Exception as e:
-            print(f"❌ An error occurred: {e}")
+    try:
+        noise_file = args.noise
+        # If noise_category is provided, use the first file from that category
+        if args.noise_category and not args.noise:
+            file_paths = return_file_path([args.noise_category])
+            if file_paths:
+                noise_file = file_paths[0]
+                print(f"Using noise file from category '{args.noise_category}': {noise_file}")
+            else:
+                print(f"No files found for category '{args.noise_category}'.")
+                return
+        if args.clean and noise_file and args.output_name:
+            combine_audio(args.clean, noise_file, args.output_name)
+        else:
+            print("Please provide --clean, --output_name, and either --noise or --noise_category.")
+    except Exception as e:
+        print(f"❌ An error occurred: {e}")
 
 
 if __name__ == "__main__":
