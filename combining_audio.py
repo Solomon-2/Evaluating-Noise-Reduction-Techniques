@@ -12,12 +12,19 @@ def combine_audio(clean_sound, noise, output_name):
 
 
   if len(y_noise) < len(y_voice):
-      # Pad noise with zeros if it's too short
-      y_noise_matched = np.pad(y_noise, (0, len(y_voice) - len(y_noise)), mode='constant')
+      # Repeat noise to cover the entire clean file, then truncate
+      repeats = int(np.ceil(len(y_voice) / len(y_noise)))
+      y_noise_matched = np.tile(y_noise, repeats)[:len(y_voice)]
   else:
       # Truncate noise if it's too long
       y_noise_matched = y_noise[:len(y_voice)]
 
+# Match noise energy to clean file
+  rms_voice = np.sqrt(np.mean(y_voice**2))
+  rms_noise = np.sqrt(np.mean(y_noise_matched**2))
+  if rms_noise > 0:
+    y_noise_matched = y_noise_matched * (rms_voice / rms_noise)
+  
   y_mixed=y_voice+y_noise_matched
 
   #Normalizing the audio to prevent severe suffering of listener😂
