@@ -6,7 +6,7 @@ import argparse
 from find_data_categories import return_file_path
 
 
-def combine_audio(clean_sound, noise, output_name):
+def combine_audio(clean_sound, noise, output_name, noise_level):
   y_voice, sr_voice = librosa.load(clean_sound, sr=16000)
   y_noise, sr_noise = librosa.load(noise, sr=16000)
 
@@ -14,7 +14,7 @@ def combine_audio(clean_sound, noise, output_name):
   if len(y_noise) < len(y_voice):
       # Repeat noise to cover the entire clean file, then truncate
       repeats = int(np.ceil(len(y_voice) / len(y_noise)))
-      y_noise_matched = np.tile(y_noise, repeats)[:len(y_voice)]
+      y_noise_matched = np.tile(y_noise, repeats)[:len(y_voice)] 
   else:
       # Truncate noise if it's too long
       y_noise_matched = y_noise[:len(y_voice)]
@@ -23,7 +23,7 @@ def combine_audio(clean_sound, noise, output_name):
   rms_voice = np.sqrt(np.mean(y_voice**2))
   rms_noise = np.sqrt(np.mean(y_noise_matched**2))
   if rms_noise > 0:
-    y_noise_matched = y_noise_matched * (rms_voice / rms_noise)
+    y_noise_matched = y_noise_matched * (rms_voice / rms_noise) * noise_level
   
   y_mixed=y_voice+y_noise_matched
 
@@ -41,8 +41,7 @@ def combine_audio(clean_sound, noise, output_name):
     #Save the combined audio
 
   sf.write(output_name, y_mixed_normalized, 16000)
-
-  return
+  return output_name
   
 
   
@@ -55,6 +54,7 @@ def main():
     parser.add_argument("-n", "--noise", help="Noise")
     parser.add_argument("-out", "--output_name", help="Output file name")
     parser.add_argument("-cat", "--noise_category", help="Noise category (optional)")
+    parser.add_argument("-nl", "--noise_level", help="Noise Level")
     # Optionally, you can add a flag to specify the category of noise, e.g. thunderstorm, rain
 
     args = parser.parse_args()
@@ -70,8 +70,8 @@ def main():
             else:
                 print(f"No files found for category '{args.noise_category}'.")
                 return
-        if args.clean and noise_file and args.output_name:
-            combine_audio(args.clean, noise_file, args.output_name)
+        if args.clean and noise_file and args.output_name and args.noise_level:
+            combine_audio(args.clean, noise_file, args.output_name, args.noise_level)
         else:
             print("Please provide --clean, --output_name, and either --noise or --noise_category.")
     except Exception as e:

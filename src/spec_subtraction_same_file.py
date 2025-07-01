@@ -89,11 +89,14 @@ def spectral_subtraction_auto_noise( # Renamed for clarity
         print("Spectral Subtraction (Auto Noise Estimation) Complete.")
         print(f"  Shape of y_cleaned: {y_cleaned.shape}")
 
-    sf.write("sleep_demo/mono_cleaned_audio.wav", y_cleaned, 16000)
+    return y_cleaned
 
 
   
 
-y_combined, sr_voice = librosa.load('sleep_demo/sleep_test_1.wav', sr=16000)
+if __name__ == "__main__":
 
-spectral_subtraction_auto_noise(y_combined,16000)
+
+    y_combined, sr_voice = librosa.load('pipeline_test_1.wav', sr=16000)
+
+    spectral_subtraction_auto_noise(y_combined,16000)
