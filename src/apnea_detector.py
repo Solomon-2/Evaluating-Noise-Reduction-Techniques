@@ -1,5 +1,6 @@
 import numpy as np
 import soundfile as sf
+import argparse
 
 def detect_apnea(audio, sr, frame_sec=1, silence_thresh=1e-4, min_apnea_sec=10):
     frame_len = int(frame_sec * sr)
@@ -34,6 +35,18 @@ def detect_apnea(audio, sr, frame_sec=1, silence_thresh=1e-4, min_apnea_sec=10):
 
     return apneas
 
-audio, sr = sf.read("output_with_apnea.wav")
-apnea_events = detect_apnea(audio, sr)
-print("Detected apnea events (start, end in seconds):", apnea_events)
+
+def main():
+    parser = argparse.ArgumentParser(description="Detect apnea events in an audio file.")
+    parser.add_argument('--input', required=True, help='Input audio file path')
+    parser.add_argument('--frame_sec', type=float, default=1, help='Frame size in seconds (default: 1)')
+    parser.add_argument('--silence_thresh', type=float, default=1e-4, help='Silence threshold (default: 1e-4)')
+    parser.add_argument('--min_apnea_sec', type=float, default=10, help='Minimum apnea duration in seconds (default: 10)')
+    args = parser.parse_args()
+
+    audio, sr = sf.read(args.input)
+    apnea_events = detect_apnea(audio, sr, frame_sec=args.frame_sec, silence_thresh=args.silence_thresh, min_apnea_sec=args.min_apnea_sec)
+    print("Detected apnea events (start, end in seconds):", apnea_events)
+
+if __name__ == "__main__":
+    main()

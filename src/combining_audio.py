@@ -71,7 +71,8 @@ def main():
                 print(f"No files found for category '{args.noise_category}'.")
                 return
         if args.clean and noise_file and args.output_name and args.noise_level:
-            combine_audio(args.clean, noise_file, args.output_name, args.noise_level)
+            noise_level = float(args.noise_level)
+            combine_audio(args.clean, noise_file, args.output_name, noise_level)
         else:
             print("Please provide --clean, --output_name, and either --noise or --noise_category.")
     except Exception as e:

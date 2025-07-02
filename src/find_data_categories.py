@@ -3,7 +3,7 @@ import librosa
 import os
 import numpy as np
 
-meta = pd.read_csv("ESC-50-MASTER/meta/esc50.csv")
+meta = pd.read_csv("../data/raw/ESC-50-MASTER/meta/esc50.csv")
 
 # desired_categories = ['dog','cat','cow','vacuum_cleaner']
 # filtered = meta[meta['category'].isin(desired_categories)].copy()
@@ -31,7 +31,7 @@ def return_file_path(category):
     # Returns a list of file paths for the given category
     filtered = meta[meta['category'].isin(category)].copy()
     
-    audio_dir = 'ESC-50-master/audio/'
+    audio_dir = '../data/raw/ESC-50-master/audio/'
     file_paths = [os.path.join(audio_dir, fname) for fname in filtered['filename']]
     return file_paths
  

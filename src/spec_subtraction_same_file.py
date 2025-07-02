@@ -1,8 +1,9 @@
 import librosa
 import numpy as np
-import soundfile as sf 
+import soundfile as sf
+import argparse
 
-def spectral_subtraction_auto_noise( # Renamed for clarity
+def spectral_subtraction_auto_noise(
     y_mixed,          # The noisy audio signal (numpy array)
     sr,               # Sampling rate
     noise_duration_sec=0.5, # How many seconds from the start to use for noise profile
@@ -92,11 +93,30 @@ def spectral_subtraction_auto_noise( # Renamed for clarity
     return y_cleaned
 
 
-  
+def main():
+    parser = argparse.ArgumentParser(description="Apply spectral subtraction to a noisy audio file.")
+    parser.add_argument('--input', required=True, help='Input noisy audio file path')
+    parser.add_argument('--output', required=True, help='Output denoised audio file path')
+    parser.add_argument('--noise_duration_sec', type=float, default=0.5, help='Seconds from start to use for noise profile (default: 0.5)')
+    parser.add_argument('--n_fft', type=int, default=2048, help='FFT window size (default: 2048)')
+    parser.add_argument('--hop_length', type=int, default=512, help='Hop length for STFT (default: 512)')
+    parser.add_argument('--subtraction_factor', type=float, default=3.0, help='Spectral subtraction factor (default: 3.0)')
+    parser.add_argument('--floor_factor', type=float, default=0.01, help='Spectral floor factor (default: 0.01)')
+    parser.add_argument('--verbose', action='store_true', help='Print verbose output')
+    args = parser.parse_args()
+
+    y_mixed, sr = librosa.load(args.input, sr=None)
+    y_denoised = spectral_subtraction_auto_noise(
+        y_mixed, sr,
+        noise_duration_sec=args.noise_duration_sec,
+        n_fft=args.n_fft,
+        hop_length=args.hop_length,
+        subtraction_factor=args.subtraction_factor,
+        floor_factor=args.floor_factor,
+        verbose=args.verbose
+    )
+    sf.write(args.output, y_denoised, sr)
+    print(f"Denoised audio saved to {args.output}")
 
 if __name__ == "__main__":
-
-
-    y_combined, sr_voice = librosa.load('pipeline_test_1.wav', sr=16000)
-
-    spectral_subtraction_auto_noise(y_combined,16000)
+    main()
