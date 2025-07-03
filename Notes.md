@@ -9,3 +9,8 @@ Attempt at Running the full pipeline
     4. Applying spectral subtraction to the replication with the apnea detector.
     5. Applying Wiener filtering to the detector.
     6. 
+
+7/3/2025
+To-Do: Implementing Evaluation Criteria
+    ## 1. Sensitivity
+    
