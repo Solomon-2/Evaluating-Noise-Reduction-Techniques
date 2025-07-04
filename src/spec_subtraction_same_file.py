@@ -1,3 +1,5 @@
+
+import os
 import librosa
 import numpy as np
 import soundfile as sf
@@ -94,9 +96,9 @@ def spectral_subtraction_auto_noise(
 
 
 def main():
-    parser = argparse.ArgumentParser(description="Apply spectral subtraction to a noisy audio file.")
-    parser.add_argument('--input', required=True, help='Input noisy audio file path')
-    parser.add_argument('--output', required=True, help='Output denoised audio file path')
+    parser = argparse.ArgumentParser(description="Apply spectral subtraction to a noisy audio file or all files in a directory.")
+    parser.add_argument('--input', required=True, help='Input noisy audio file path or directory')
+    parser.add_argument('--output', required=True, help='Output denoised audio file path or directory')
     parser.add_argument('--noise_duration_sec', type=float, default=0.5, help='Seconds from start to use for noise profile (default: 0.5)')
     parser.add_argument('--n_fft', type=int, default=2048, help='FFT window size (default: 2048)')
     parser.add_argument('--hop_length', type=int, default=512, help='Hop length for STFT (default: 512)')
@@ -105,18 +107,41 @@ def main():
     parser.add_argument('--verbose', action='store_true', help='Print verbose output')
     args = parser.parse_args()
 
-    y_mixed, sr = librosa.load(args.input, sr=None)
-    y_denoised = spectral_subtraction_auto_noise(
-        y_mixed, sr,
-        noise_duration_sec=args.noise_duration_sec,
-        n_fft=args.n_fft,
-        hop_length=args.hop_length,
-        subtraction_factor=args.subtraction_factor,
-        floor_factor=args.floor_factor,
-        verbose=args.verbose
-    )
-    sf.write(args.output, y_denoised, sr)
-    print(f"Denoised audio saved to {args.output}")
+    # If input is a directory, process all .wav files in it
+    if os.path.isdir(args.input):
+        os.makedirs(args.output, exist_ok=True)
+        input_files = [f for f in os.listdir(args.input) if f.lower().endswith('.wav')]
+        if not input_files:
+            print(f"No .wav files found in directory {args.input}")
+            return
+        for fname in input_files:
+            in_path = os.path.join(args.input, fname)
+            out_path = os.path.join(args.output, f"denoised_{fname}")
+            y_mixed, sr = librosa.load(in_path, sr=None)
+            y_denoised = spectral_subtraction_auto_noise(
+                y_mixed, sr,
+                noise_duration_sec=args.noise_duration_sec,
+                n_fft=args.n_fft,
+                hop_length=args.hop_length,
+                subtraction_factor=args.subtraction_factor,
+                floor_factor=args.floor_factor,
+                verbose=args.verbose
+            )
+            sf.write(out_path, y_denoised, sr)
+            print(f"Denoised audio saved to {out_path}")
+    else:
+        y_mixed, sr = librosa.load(args.input, sr=None)
+        y_denoised = spectral_subtraction_auto_noise(
+            y_mixed, sr,
+            noise_duration_sec=args.noise_duration_sec,
+            n_fft=args.n_fft,
+            hop_length=args.hop_length,
+            subtraction_factor=args.subtraction_factor,
+            floor_factor=args.floor_factor,
+            verbose=args.verbose
+        )
+        sf.write(args.output, y_denoised, sr)
+        print(f"Denoised audio saved to {args.output}")
 
 if __name__ == "__main__":
     main()

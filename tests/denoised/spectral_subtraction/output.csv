@@ -1,0 +1,6 @@
+filename,start_sec,end_sec
+..\tests\raw\raw_1_20s.wav,0,20
+..\tests\raw\raw_2_62s.wav,0,20
+..\tests\raw\raw_2_62s.wav,21,37
+..\tests\raw\raw_2_62s.wav,38,48
+..\tests\raw\raw_3_30s.wav,0,30

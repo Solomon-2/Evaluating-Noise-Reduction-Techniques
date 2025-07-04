@@ -1,3 +1,5 @@
+
+import os
 import librosa
 import numpy as np
 import soundfile as sf
@@ -50,9 +52,9 @@ def main():
         description = "Combine audio files"
     )
 
-    parser.add_argument("-cl", "--clean", help="Clean Audio")
+    parser.add_argument("-cl", "--clean", help="Clean Audio file or directory")
     parser.add_argument("-n", "--noise", help="Noise")
-    parser.add_argument("-out", "--output_name", help="Output file name")
+    parser.add_argument("-out", "--output_name", help="Output file name (or output directory if --clean is a directory)")
     parser.add_argument("-cat", "--noise_category", help="Noise category (optional)")
     parser.add_argument("-nl", "--noise_level", help="Noise Level")
     # Optionally, you can add a flag to specify the category of noise, e.g. thunderstorm, rain
@@ -70,7 +72,28 @@ def main():
             else:
                 print(f"No files found for category '{args.noise_category}'.")
                 return
-        if args.clean and noise_file and args.output_name and args.noise_level:
+        # If --clean is a directory, process all wav files in it
+        if args.clean and os.path.isdir(args.clean):
+            if not args.output_name:
+                print("Please provide --output_name as an output directory when using a clean directory.")
+                return
+            os.makedirs(args.output_name, exist_ok=True)
+            clean_files = [f for f in os.listdir(args.clean) if f.lower().endswith('.wav')]
+            if not clean_files:
+                print(f"No .wav files found in directory {args.clean}")
+                return
+            for clean_file in clean_files:
+                clean_path = os.path.join(args.clean, clean_file)
+                output_path = os.path.join(args.output_name, f"mixed_{clean_file}")
+                if noise_file and args.noise_level:
+                    noise_level = float(args.noise_level)
+                    combine_audio(clean_path, noise_file, output_path, noise_level)
+                    print(f"Combined {clean_path} with {noise_file} -> {output_path}")
+                else:
+                    print("Please provide --noise or --noise_category and --noise_level.")
+                    return
+        # If --clean is a single file
+        elif args.clean and noise_file and args.output_name and args.noise_level:
             noise_level = float(args.noise_level)
             combine_audio(args.clean, noise_file, args.output_name, noise_level)
         else:

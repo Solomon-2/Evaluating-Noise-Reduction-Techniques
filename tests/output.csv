@@ -1,9 +1,0 @@
-filename,start_sec,end_sec
-..\tests\replication_1_multiple_apneas.wav,3,9
-..\tests\replication_1_multiple_apneas.wav,18,24
-..\tests\replication_1_multiple_apneas.wav,35,41
-..\tests\replication_1_multiple_apneas.wav,47,53
-..\tests\replication_1_spect.wav,11,21
-..\tests\replication_1_wiener.wav,11,21
-..\tests\replication_1_with_apnea.wav,11,21
-..\tests\replication_1_with_vacuum.wav,11,21
