@@ -115,13 +115,42 @@ if __name__ == '__main__':
     parser.add_argument('--sr', type=int, default=16000, help='Target sample rate (default: 16000)')
     parser.add_argument('--verbose', action='store_true', help='Print verbose output')
     args = parser.parse_args()
-    main(
-        input_noisy_filename=args.input,
-        output_cleaned_filename=args.output,
-        target_sr=args.sr,
-        initial_noise_duration=args.noise_duration,
-        n_fft_val=args.n_fft,
-        hop_length_val=args.hop_length,
-        epsilon_val=args.epsilon,
-        verbose=args.verbose
-    )
+    import os
+    # If input is a directory, process all .wav files in it
+    if os.path.isdir(args.input):
+        input_dir = args.input
+        output_dir = args.output
+        if not output_dir:
+            print("Please provide --output as output directory when using directory input.")
+            exit(1)
+        os.makedirs(output_dir, exist_ok=True)
+        wav_files = [f for f in os.listdir(input_dir) if f.lower().endswith('.wav')]
+        if not wav_files:
+            print(f"No .wav files found in directory {input_dir}")
+            exit(1)
+        for fname in wav_files:
+            in_path = os.path.join(input_dir, fname)
+            out_path = os.path.join(output_dir, fname)
+            if args.verbose:
+                print(f"Processing {in_path} -> {out_path}")
+            main(
+                input_noisy_filename=in_path,
+                output_cleaned_filename=out_path,
+                target_sr=args.sr,
+                initial_noise_duration=args.noise_duration,
+                n_fft_val=args.n_fft,
+                hop_length_val=args.hop_length,
+                epsilon_val=args.epsilon,
+                verbose=args.verbose
+            )
+    else:
+        main(
+            input_noisy_filename=args.input,
+            output_cleaned_filename=args.output,
+            target_sr=args.sr,
+            initial_noise_duration=args.noise_duration,
+            n_fft_val=args.n_fft,
+            hop_length_val=args.hop_length,
+            epsilon_val=args.epsilon,
+            verbose=args.verbose
+        )

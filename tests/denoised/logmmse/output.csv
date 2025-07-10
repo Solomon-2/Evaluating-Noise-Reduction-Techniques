@@ -1,0 +1,4 @@
+filename,start_sec,end_sec
+../tests/denoised/logmmse/mixed_raw_2_62s.wav,0,49
+../tests/denoised/logmmse/mixed_raw_1_20s.wav,0,20
+../tests/denoised/logmmse/mixed_raw_3_30s.wav,0,30

@@ -1,0 +1,6 @@
+filename,start_sec,end_sec
+../tests/denoised/wiener/mixed_raw_2_62s.wav,8,20
+../tests/denoised/wiener/mixed_raw_2_62s.wav,21,34
+../tests/denoised/wiener/mixed_raw_2_62s.wav,38,48
+../tests/denoised/wiener/mixed_raw_1_20s.wav,0,20
+../tests/denoised/wiener/mixed_raw_3_30s.wav,0,30

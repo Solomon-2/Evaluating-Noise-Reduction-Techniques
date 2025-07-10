@@ -70,23 +70,26 @@ def batch_denoise(input_dir, output_dir, file_extension=".wav"):
             denoise_with_deepfilternet(input_path, output_path, model, df_state)
 
 if __name__ == "__main__":
-    # Example usage
-    
-    # Single file denoising
-    input_file = "/workspaces/Evaluating-Noise-Reduction-Techniques/tests/noisy/mixed_raw_1_20s.wav"
-    output_file = "/workspaces/Evaluating-Noise-Reduction-Techniques/src/denoised_deepfilternet.wav"
-    
-    if os.path.exists(input_file):
-        print("=== Single File Denoising ===")
-        success = denoise_with_deepfilternet(input_file, output_file)
-        if success:
-            print(f"Denoised audio saved to: {output_file}")
+    import argparse
+    parser = argparse.ArgumentParser(description="Denoise audio using DeepFilterNet (single file or batch directory)")
+    parser.add_argument('--input', required=True, help='Input audio file or directory')
+    parser.add_argument('--output', required=True, help='Output audio file or directory')
+    parser.add_argument('--ext', default='.wav', help='Audio file extension to process in batch mode (default: .wav)')
+    args = parser.parse_args()
+
+    if os.path.isdir(args.input):
+        # Batch mode
+        input_dir = args.input
+        output_dir = args.output
+        batch_denoise(input_dir, output_dir, file_extension=args.ext)
     else:
-        print(f"Input file not found: {input_file}")
-    
-    # Batch processing example (uncomment to use)
-    # print("\n=== Batch Processing ===")
-    # input_dir = "/workspaces/Evaluating-Noise-Reduction-Techniques/tests/noisy"
-    # output_dir = "/workspaces/Evaluating-Noise-Reduction-Techniques/tests/denoised/deepfilternet"
-    # batch_denoise(input_dir, output_dir)
+        # Single file mode
+        input_file = args.input
+        output_file = args.output
+        if not os.path.exists(input_file):
+            print(f"Input file not found: {input_file}")
+        else:
+            success = denoise_with_deepfilternet(input_file, output_file)
+            if success:
+                print(f"Denoised audio saved to: {output_file}")
     
