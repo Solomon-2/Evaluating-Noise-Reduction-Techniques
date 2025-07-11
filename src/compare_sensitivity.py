@@ -1,6 +1,7 @@
 import csv
 import argparse
 from collections import defaultdict
+from normalize_filenames import normalize_filename
 
 # Helper: compute overlap between two intervals
 def interval_overlap(a_start, a_end, b_start, b_end):
@@ -10,19 +11,14 @@ def interval_overlap(a_start, a_end, b_start, b_end):
     return overlap
 
 def load_events(csv_path):
-    """Returns dict: {filename: [(start, end), ...]}"""
-    import re
+    """Returns dict: {normalized_filename: [(start, end), ...]}"""
     events = defaultdict(list)
     with open(csv_path, newline='') as f:
         reader = csv.DictReader(f)
         for row in reader:
-            # Extract .wav filename from the path
+            # Use normalized filename for matching
             full = row['filename']
-            match = re.search(r'[^/\\]*\.wav$', full)
-            if match:
-                fname = match.group(0)
-            else:
-                fname = full  # fallback
+            fname = normalize_filename(full)
             start = float(row['start_sec'])
             end = float(row['end_sec'])
             events[fname].append((start, end))
