@@ -1,4 +1,12 @@
 filename,start_sec,end_sec
-../tests/denoised/speechbrain/mixed_raw_2_62s.wav,0,63
-../tests/denoised/speechbrain/mixed_raw_1_20s.wav,0,20
-../tests/denoised/speechbrain/mixed_raw_3_30s.wav,0,30
+../tests/denoised/speechbrain/output_audio.wav,8,514
+../tests/denoised/speechbrain/output_audio.wav,515,877
+../tests/denoised/speechbrain/output_audio.wav,900,945
+../tests/denoised/speechbrain/output_audio.wav,946,1355
+../tests/denoised/speechbrain/output_audio.wav,1356,1579
+../tests/denoised/speechbrain/output_audio.wav,1580,1916
+../tests/denoised/speechbrain/output_audio.wav,1917,2233
+../tests/denoised/speechbrain/output_audio.wav,2234,2536
+../tests/denoised/speechbrain/output_audio.wav,2537,3284
+../tests/denoised/speechbrain/output_audio.wav,3317,3534
+../tests/denoised/speechbrain/output_audio.wav,3535,3600

@@ -3,3 +3,7 @@ sound_env
 outputs/  
 archive/ 
 venv/
+sleep_audio_db/
+tests/
+useful_sleep_sounds/cleaned_output.wav
+useful_sleep_sounds/full_mic.wav

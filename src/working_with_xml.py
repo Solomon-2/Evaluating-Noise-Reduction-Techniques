@@ -53,10 +53,10 @@ def extract_apnea_events(xml_file_path, output_csv=None):
 
 # Usage example
 if __name__ == "__main__":
-    xml_path = "../data/patient_description.rml"
+    xml_path = "../sleep_audio_db/rml/rml_file_2.rml"
     
     # Extract apnea events
-    events = extract_apnea_events(xml_path, "apnea_ground_truth.csv")
+    events = extract_apnea_events(xml_path, "../sleep_audio_db/rml/rml_csv_2.csv")
     
     print(f"\nFound {len(events)} apnea events total")
     

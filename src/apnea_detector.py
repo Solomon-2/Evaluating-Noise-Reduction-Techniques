@@ -44,7 +44,7 @@ def main():
     parser.add_argument('--input', nargs='+', help='Input audio file path(s)')
     parser.add_argument('--dir', type=str, default=None, help='Directory containing audio files to process (all .wav files)')
     parser.add_argument('--frame_sec', type=float, default=1, help='Frame size in seconds (default: 1)')
-    parser.add_argument('--silence_thresh', type=float, default=1e-1, help='Silence threshold (default: 1e-4)')
+    parser.add_argument('--silence_thresh', type=float, default=0.5, help='Silence threshold (default: 1e-4)')
     parser.add_argument('--min_apnea_sec', type=float, default=10, help='Minimum apnea duration in seconds (default: 10)')
     parser.add_argument('--output_csv', type=str, default=None, help='Optional: Output CSV file for detected events')
     args = parser.parse_args()
