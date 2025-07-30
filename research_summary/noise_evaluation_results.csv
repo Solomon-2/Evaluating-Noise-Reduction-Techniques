@@ -1,0 +1,6 @@
+condition_name,num_samples,f1_score,precision,recall_sensitivity,specificity,accuracy,confusion_matrix,f1_degradation_pct,sensitivity_degradation_pct,specificity_degradation_pct,patient,noise_category,snr_db
+patient_01_wav_5db_vacuum_cleaner,1168,0.0,0.0,0.0,1.0,0.5376712328767124,"[[628, 0], [540, 0]]",100.0,100.0,-24.111743965283427,patient_01_wav,vacuum_cleaner,5
+patient_01_wav_5db_cat,1168,0.03616636528028933,0.7692307692307693,0.018518518518518517,0.9952229299363057,0.5436643835616438,"[[625, 3], [530, 10]]",95.2273256258718,97.33473347334734,-23.518853468633978,patient_01_wav,cat,5
+patient_01_wav_5db_door_wood_creaks,1168,0.0,0.0,0.0,1.0,0.5376712328767124,"[[628, 0], [540, 0]]",100.0,100.0,-24.111743965283427,patient_01_wav,door_wood_creaks,5
+patient_01_wav_5db_crying_baby,1168,0.0,0.0,0.0,1.0,0.5376712328767124,"[[628, 0], [540, 0]]",100.0,100.0,-24.111743965283427,patient_01_wav,crying_baby,5
+patient_01_wav_5db_coughing,1168,0.2181372549019608,0.322463768115942,0.1648148148148148,0.7022292993630573,0.4537671232876712,"[[441, 187], [451, 89]]",71.21363790790843,76.2791279127913,12.84509699253186,patient_01_wav,coughing,5

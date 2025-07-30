@@ -1,0 +1,29 @@
+{
+  "evaluation_timestamp": "2025-07-30 16:23:12",
+  "phase2_status": "completed",
+  "total_conditions": 5,
+  "clean_baseline_f1": 0.7577798618808083,
+  "average_noisy_f1": 0.05086072403645001,
+  "average_degradation_pct": 93.28819270675605,
+  "worst_degradation_pct": 100.0,
+  "best_condition": "patient_01_wav_5db_coughing",
+  "worst_condition": "patient_01_wav_5db_vacuum_cleaner",
+  "noise_categories": [
+    "vacuum_cleaner",
+    "cat",
+    "door_wood_creaks",
+    "crying_baby",
+    "coughing"
+  ],
+  "snr_levels": [
+    5,
+    10,
+    15
+  ],
+  "files_generated": [
+    "noise_injection_metadata.csv",
+    "noise_evaluation_results.csv",
+    "noise_degradation_analysis.png",
+    "phase3_preparation_config.json"
+  ]
+}
