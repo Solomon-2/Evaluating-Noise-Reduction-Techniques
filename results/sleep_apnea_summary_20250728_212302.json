@@ -1,0 +1,16 @@
+{
+  "total_frames": 239,
+  "apnea_frames": 1,
+  "apnea_percentage": 0.41841004184100417,
+  "avg_probability": 0.37610815927692703,
+  "max_probability": 0.5010673977625846,
+  "risk_level": "LOW",
+  "input_path": "../useful_sleep_sounds/full_mic_2.wav",
+  "timestamp": "20250728_212302",
+  "model_info": {
+    "model_type": "Random Forest",
+    "algorithm": "RandomForestClassifier",
+    "training_date": "2025-07-28T21:05:57.361399",
+    "sklearn_version": "1.5.1"
+  }
+}

@@ -3,10 +3,10 @@ import soundfile as sf
 import os
 import numpy as np
 
-edf_path = "../sleep_audio_db/no_1.edf"
+edf_path = "../sleep_audio_db/00000999-100507[001].edf"
 output_dir = "../useful_sleep_sounds/"
 os.makedirs(output_dir, exist_ok=True)
-output_file = os.path.join(output_dir, "full_mic.wav")
+output_file = os.path.join(output_dir, "00000999-100507[001].wav")
 
 print("loading only the 'Mic' channel header...")
 raw = mne.io.read_raw_edf(edf_path, preload=False, verbose=False)
@@ -25,7 +25,7 @@ print(f"duration: {raw.times[-1]/60:.1f} min")
 print(f"sampling rate: {sfreq}")
 print(f"mic channel index: {mic_idx}")
 
-chunk_samples = 10 * sfreq  # e.g., 10 seconds at a time (~ so ~10MB/float)
+chunk_samples = 720 * sfreq  # e.g., 10 seconds at a time (~ so ~10MB/float)
 start = 0
 print(f"\nwriting 'Mic' channel to {output_file} in {chunk_samples} sample chunks...")
 

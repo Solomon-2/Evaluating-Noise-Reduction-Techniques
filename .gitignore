@@ -8,3 +8,6 @@ tests/
 useful_sleep_sounds/cleaned_output.wav
 useful_sleep_sounds/full_mic.wav
 models/
+useful_sleep_sounds/
+data/patient_data
+data/sleep_data

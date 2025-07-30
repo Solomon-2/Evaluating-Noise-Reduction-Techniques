@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(venvScriptspython.exe:*)",
+      "Bash(\"venv/Scripts/python.exe\":*)",
+      "Bash(venv/bin/python:*)",
+      "Bash(venv/Scripts/python.exe src/edf_to_wav_converter.py:*)",
+      "Bash(mkdir:*)",
+      "Bash(mv:*)",
+      "Bash(sed:*)",
+      "Bash(find:*)",
+      "Bash(ls:*)",
+      "Bash(cut:*)"
+    ],
+    "deny": []
+  }
+}
